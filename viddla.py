@@ -24,7 +24,7 @@ paging = True
 time_range_support = True
 
 # search-url
-search_url = 'https://api-dev.vidd.la/search?fields=date,title,shdesc,longdesc,duration,url,thumbnail,id&sort=relevance&limit=5&page={pageno}&{query}'  # noqa
+search_url = 'https://api-dev.vidd.la/search?fields=date,title,shdesc,longdesc,duration,url,thumbnail,id&sort=relevance&src=viddla&limit=5&page={pageno}&{query}'  # noqa
 embedded_url = '<iframe frameborder="0" width="540" height="304" ' +\
     'data-src="https://embed.vidd.la/{videoid}" allowfullscreen></iframe>'
 
@@ -52,9 +52,9 @@ def response(resp):
     for res in search_res['list']:
         title = res['title']
         url = res['url']
-        content = html_to_text(res['description'])
-        thumbnail = res['thumbnail_360_url']
-        publishedDate = datetime.fromtimestamp(res['created_time'], None)
+        content = html_to_text(res['shdesc'])
+        thumbnail = res['thumbnail']
+        publishedDate = datetime.fromtimestamp(res['date'], None)
         embedded = embedded_url.format(videoid=res['id'])
 
         # http to https
